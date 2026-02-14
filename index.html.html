@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Beautiful Abisolami 💕</title>
+    
+    <!-- Google Fonts - Elegant & Romantic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ============================================
+           GLOBAL STYLES & RESET
+        ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe4f1 50%, #ffd4e5 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ============================================
+           FLOATING HEARTS BACKGROUND
+        ============================================ */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0;
+            animation: floatHeart 8s infinite ease-in-out;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ============================================
+           WELCOME SCREEN
+        ============================================ */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(135deg, #fff5f9 0%, #ffe8f3 50%, #ffd9eb 100%);
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .welcome-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .welcome-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 600;
+            color: #c2185b;
+            text-align: center;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1.5s ease;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        /* Glowing name effect */
+        .glow-name {
+            background: linear-gradient(45deg, #e91e63, #c2185b, #ad1457);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                filter: drop-shadow(0 0 5px rgba(233, 30, 99, 0.3));
+            }
+            50% {
+                filter: drop-shadow(0 0 20px rgba(233, 30, 99, 0.6));
+            }
+        }
+
+        /* Beating heart animation */
+        .beating-heart {
+            display: inline-block;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            10%, 30% {
+                transform: scale(1.1);
+            }
+            20%, 40% {
+                transform: scale(0.9);
+            }
+        }
+
+        .welcome-subtitle {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #d81b60;
+            margin-bottom: 3rem;
+            animation: fadeIn 2s ease 0.5s both;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .open-button {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 500;
+            padding: 18px 45px;
+            background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.4);
+            transition: all 0.3s ease;
+            animation: fadeInUp 2s ease 1s both;
+        }
+
+        .open-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(233, 30, 99, 0.6);
+        }
+
+        .open-button:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        /* ============================================
+           MAIN CARD CONTENT
+        ============================================ */
+        .card-container {
+            position: relative;
+            z-index: 100;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.5s ease 0.5s, visibility 1.5s ease 0.5s;
+        }
+
+        .card-container.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 60px 50px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            animation: slideUp 1s ease;
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #c2185b;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-recipient {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #e91e63;
+            margin-bottom: 2rem;
+        }
+
+        .divider {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #e91e63, transparent);
+            margin: 2rem auto;
+            border-radius: 2px;
+        }
+
+        .message {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            line-height: 2;
+            color: #555;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .message p {
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease both;
+        }
+
+        .message p:nth-child(1) { animation-delay: 0.2s; }
+        .message p:nth-child(2) { animation-delay: 0.4s; }
+        .message p:nth-child(3) { animation-delay: 0.6s; }
+        .message p:nth-child(4) { animation-delay: 0.8s; }
+        .message p:nth-child(5) { animation-delay: 1s; }
+
+        .emphasis {
+            font-weight: 600;
+            color: #c2185b;
+            font-style: italic;
+        }
+
+        .signature {
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            color: #d81b60;
+            margin-top: 2rem;
+            font-weight: 600;
+            animation: fadeIn 1.5s ease 1.2s both;
+        }
+
+        .ps-note {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            color: #888;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(233, 30, 99, 0.2);
+            font-style: italic;
+            animation: fadeInUp 1.5s ease 1.5s both;
+        }
+
+        /* ============================================
+           ANIMATIONS
+        ============================================ */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN
+        ============================================ */
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 2rem;
+            }
+
+            .welcome-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .open-button {
+                font-size: 1rem;
+                padding: 15px 35px;
+            }
+
+            .card {
+                padding: 40px 30px;
+            }
+
+            .card-title {
+                font-size: 2rem;
+            }
+
+            .card-recipient {
+                font-size: 1.6rem;
+            }
+
+            .message {
+                font-size: 1.1rem;
+                line-height: 1.8;
+            }
+
+            .signature {
+                font-size: 1.2rem;
+            }
+
+            .ps-note {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-title {
+                font-size: 1.6rem;
+            }
+
+            .welcome-subtitle {
+                font-size: 1rem;
+            }
+
+            .card {
+                padding: 30px 20px;
+                border-radius: 20px;
+            }
+
+            .card-title {
+                font-size: 1.6rem;
+            }
+
+            .card-recipient {
+                font-size: 1.3rem;
+            }
+
+            .message {
+                font-size: 1rem;
+            }
+
+            .heart {
+                font-size: 16px;
+            }
+        }
+
+        /* ============================================
+           MUSIC CONTROL (subtle, optional)
+        ============================================ */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2000;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 1s ease 2s both;
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Music (Romantic Instrumental) -->
+    <!-- Using a soft romantic piano piece from a free music source -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Floating Hearts Background -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <h1 class="welcome-title">
+            For My Beautiful <span class="glow-name">Abisolami</span><span class="beating-heart">💕</span>
+        </h1>
+        <p class="welcome-subtitle">A little piece of my heart…</p>
+        <button class="open-button" id="openButton">Open My Heart ❤️</button>
+    </div>
+
+    <!-- Main Card Container -->
+    <div class="card-container" id="cardContainer">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Happy Valentine's Day,</h2>
+                <h3 class="card-recipient">Abisolami</h3>
+                <div class="divider"></div>
+            </div>
+
+            <div class="message">
+                <p>You are my soft place to land.</p>
+                <p>My peace. My joy. My answered prayer.</p>
+                <p>Every moment with you feels warm, safe, and magical.</p>
+                <p><span class="emphasis">I don't just love you…<br>I adore you.</span></p>
+                <p>Today and always, I choose you. ❤️</p>
+            </div>
+
+            <div class="signature">
+                Forever Yours
+            </div>
+
+            <div class="ps-note">
+                P.S. You're stuck with me forever 😌💕
+            </div>
+        </div>
+    </div>
+
+    <!-- Music Control Toggle -->
+    <div class="music-control" id="musicControl" title="Toggle Music">🎵</div>
+
+    <script>
+        // ============================================
+        // MAIN FUNCTIONALITY
+        // ============================================
+
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const cardContainer = document.getElementById('cardContainer');
+        const openButton = document.getElementById('openButton');
+        const bgMusic = document.getElementById('bgMusic');
+        const musicControl = document.getElementById('musicControl');
+        const heartsContainer = document.getElementById('heartsContainer');
+
+        let musicPlaying = false;
+
+        // ============================================
+        // OPEN BUTTON - REVEAL CARD
+        // ============================================
+        openButton.addEventListener('click', function() {
+            // Hide welcome screen
+            welcomeScreen.classList.add('hidden');
+            
+            // Show card after a brief delay
+            setTimeout(() => {
+                cardContainer.classList.add('visible');
+            }, 500);
+
+            // Try to play music (with user interaction requirement)
+            playMusic();
+
+            // Generate more hearts when card opens
+            generateHearts(20);
+        });
+
+        // ============================================
+        // MUSIC CONTROL
+        // ============================================
+        function playMusic() {
+            bgMusic.volume = 0.15; // Low volume for ambiance
+            bgMusic.play().then(() => {
+                musicPlaying = true;
+                musicControl.textContent = '🔊';
+            }).catch(error => {
+                // Autoplay blocked - user needs to interact
+                console.log('Autoplay prevented. User interaction required.');
+                musicControl.textContent = '🔇';
+            });
+        }
+
+        musicControl.addEventListener('click', function() {
+            if (musicPlaying) {
+                bgMusic.pause();
+                musicPlaying = false;
+                musicControl.textContent = '🔇';
+            } else {
+                bgMusic.play();
+                musicPlaying = true;
+                musicControl.textContent = '🔊';
+            }
+        });
+
+        // ============================================
+        // FLOATING HEARTS GENERATOR
+        // ============================================
+        function generateHearts(count) {
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    createHeart();
+                }, i * 300); // Stagger creation
+            }
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = ['❤️', '💕', '💖', '💗', '💝'][Math.floor(Math.random() * 5)];
+            
+            // Random horizontal position
+            heart.style.left = Math.random() * 100 + '%';
+            
+            // Random animation duration
+            heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            
+            // Random delay
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            
+            heartsContainer.appendChild(heart);
+
+            // Remove heart after animation completes
+            setTimeout(() => {
+                heart.remove();
+            }, 10000);
+        }
+
+        // ============================================
+        // INITIAL HEARTS ON LOAD
+        // ============================================
+        window.addEventListener('load', function() {
+            generateHearts(15);
+            
+            // Continuously generate hearts
+            setInterval(() => {
+                createHeart();
+            }, 800);
+        });
+
+        // ============================================
+        // PREVENT MUSIC CONTROL FROM INTERFERING
+        // ============================================
+        musicControl.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    </script>
+</body>
+</html>
